@@ -10,13 +10,15 @@ import PostsList from './pages/PostsList';
 import PostDetail from './pages/PostDetail';
 import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
-import Chat from './pages/Chat'; // 👈 Добавь импорт
+import Chat from './pages/Chat';
+import RoomChatPage from './pages/RoomChatPage';
+import JoinRoomPage from './pages/JoinRoomPage';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <ChatProvider> {/* 👈 Оберни в ChatProvider */}
+        <ChatProvider>
           <Header />
           <main>
             <Routes>
@@ -24,27 +26,35 @@ const App: React.FC = () => {
               <Route path="/register" element={<Register />} />
               <Route path="/" element={<PostsList />} />
               <Route path="/posts/:id" element={<PostDetail />} />
+              
+              {/* 👇 ЧАТЫ — добавленные роуты */}
               <Route path="/chat" element={
                 <PrivateRoute>
                   <Chat />
                 </PrivateRoute>
-              } /> {/* 👈 Добавь роут для чата */}
-              <Route
-                path="/posts/new"
-                element={
-                  <PrivateRoute>
-                    <CreatePost />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/posts/:id/edit"
-                element={
-                  <PrivateRoute>
-                    <EditPost />
-                  </PrivateRoute>
-                }
-              />
+              } />
+              <Route path="/chat/room/:roomId" element={
+                <PrivateRoute>
+                  <RoomChatPage />
+                </PrivateRoute>
+              } />
+              <Route path="/chat/join/:inviteCode" element={
+                <PrivateRoute>
+                  <JoinRoomPage />
+                </PrivateRoute>
+              } />
+              {/* 👆 конец чатов */}
+              
+              <Route path="/posts/new" element={
+                <PrivateRoute>
+                  <CreatePost />
+                </PrivateRoute>
+              } />
+              <Route path="/posts/:id/edit" element={
+                <PrivateRoute>
+                  <EditPost />
+                </PrivateRoute>
+              } />
             </Routes>
           </main>
         </ChatProvider>

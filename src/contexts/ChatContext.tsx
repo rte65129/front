@@ -16,6 +16,7 @@ interface Message {
 
 interface ChatContextType {
   messages: Message[];
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>; // ← ДОБАВИТЬ
   activeChat: { userId?: number; roomId?: number } | null;
   typingUsers: Map<number, string>;
   setActiveChat: (chat: { userId?: number; roomId?: number } | null) => void;
@@ -127,6 +128,7 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
     <ChatContext.Provider
       value={{
         messages,
+        setMessages,
         activeChat,
         typingUsers,
         setActiveChat,
